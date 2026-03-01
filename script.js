@@ -185,3 +185,167 @@ ScrollReveal().reveal('.about-img,.fillter-buttons,.contact-info', { origin: "le
 ScrollReveal().reveal('.about-content,.skills', { origin: "right" });
 ScrollReveal().reveal('.allServices,.portfolio-gallery,.blog-box,footer,.img-hero', { origin: "bottom" });
 
+const cardData = [
+    {
+        title: "Desbloquea tu Creatividad",
+        image: "img/sin-fondo-negativo.png",
+    },
+    {
+        title: "Diseña tu Futuro Digital",
+        image: "img/Kathyana-Primera propuesta.png",
+    },
+    {
+        title: "Construye con Pasión",
+        image: "img/Moda y Estilo.png",
+    },
+    {
+        title: "Piensa en Grande",
+        image: "img/Logo sin Fondo.png",
+    },
+     {
+        title: "Piensa en Grande",
+        image: "img/Logo-Fast-Money.png",
+    },
+     {
+        title: "Piensa en Grande",
+        image: "img/MUSE Fashon.png",
+    },
+     {
+        title: "Piensa en Grande",
+        image: "img/Mesa de trabajo 1.png",
+    },
+     {
+        title: "Piensa en Grande",
+        image: "img/LogoAP.png",
+    },
+    {
+        title: "Piensa en Grande",
+        image: "img/LogoCodelatam.png",
+    },
+];
+
+const marqueeTrack = document.getElementById("marqueeTrack");
+
+function createCards() {
+    const allCards = [...cardData, ...cardData];
+
+    allCards.forEach(card => {
+        const cardElement = document.createElement("div");
+        cardElement.classList.add("marquee-card");
+
+        cardElement.innerHTML = `
+            <img src="${card.image}" alt="card">
+            <div class="marquee-overlay">
+                <p>${card.title}</p>
+            </div>
+        `;
+
+        marqueeTrack.appendChild(cardElement);
+    });
+
+    marqueeTrack.style.animationDuration = (cardData.length * 3) + "s";
+}
+
+createCards();
+
+marqueeTrack.addEventListener("mouseenter", () => {
+    marqueeTrack.style.animationPlayState = "paused";
+});
+
+marqueeTrack.addEventListener("mouseleave", () => {
+    marqueeTrack.style.animationPlayState = "running";
+});
+
+const plans = [
+    {
+        id: 'basico',
+        name: 'PLAN BÁSICO',
+        price: '$30',
+        tagline: 'Ideal para emprendedores',
+        description: 'Ideal para emprendimientos que están comenzando ',
+        popular: false,
+        features: [
+            '1 propuesta de logo',
+            '1 ronda de cambios ',
+            'Entrega en JPG y PNG',
+            'Logo en fondo claro y oscuro',
+            '1 flyer promocional sencillo',
+            'Tiempo de entrega: 3–4 días'
+        ],
+    },
+    {
+        id: 'estandar',
+        name: 'PLAN ESTÁNDAR',
+        price: '$40',
+        tagline: 'Identidad más sólida',
+        description: 'Perfecto para marcas que quieren una identidad más sólida ',
+        popular: true,
+        features: [
+            '2 propuestas de logo',
+            'Hasta 2 rondas de cambios',
+            'Entrega en JPG, PNG y PDF',
+            'Versiones: color, blanco y negro',
+            '1 flyer promocional personalizado',
+            'Mini manual corporativo',
+            'Tiempo de entrega: 2–3 días'
+        ],
+    },
+    {
+        id: 'premium',
+        name: 'PLAN PREMIUM',
+        price: '$60',
+        tagline: 'Marca profesional',
+        description: 'Pensado para marcas que quieren verse profesionales y destacar',
+        popular: false,
+        features: [
+            '3 propuestas de logo',
+            'Cambios ilimitados',
+            'Entrega en JPG, PNG, PDF y editable',
+            'Versiones: color, blanco, negro y monocromático',
+            'Mockups del logo',
+            '1–2 flyers promocionales profesionales',
+            'Manual corporativo completo',
+            'Tiempo de entrega: 1–2 días'
+        ],
+    }
+];
+
+const pricingContainer = document.getElementById("pricingContainer");
+
+plans.forEach(plan => {
+
+    const card = document.createElement("div");
+    card.classList.add("pricing-card");
+
+    // Destacar plan popular
+    if (plan.popular) {
+        card.classList.add("popular-plan");
+    }
+
+    card.innerHTML = `
+        ${plan.popular ? `<div class="popular-badge">⭐ Más Popular</div>` : ''}
+
+        <h3>${plan.name}</h3>
+        <div class="price">${plan.price}</div>
+        <div class="tagline">${plan.tagline}</div>
+        <p>${plan.description}</p>
+
+        <ul>
+            ${plan.features.map(feature => `
+                <li><i class='bx bx-check'></i> ${feature}</li>
+            `).join('')}
+        </ul>
+
+        <button class="plan-btn" onclick="purchasePlan('${plan.name}')">
+            Contratar
+        </button>
+    `;
+
+    pricingContainer.appendChild(card);
+});
+
+function purchasePlan(planName) {
+    const message = `Hola 👋, estoy interesado en el ${planName}. ¿Podrías darme más información?`;
+    const url = `https://api.whatsapp.com/send/?phone=50589512768&text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+}
